@@ -44,9 +44,8 @@
 
 <p>Once I had an idea of how it would work, I added some other gems like Nokogiri, OpenURI, and Pry. Without thse gems the application wouldn't work. Nokogiri is required in order to scrape the elements on the website, OpenURI gets the page for me, and Pry is great for debugging ruby code.</p>
 
-<p>I found it very tricky to scrape my site for the elements I wanted because the CVEs are provided in XML format and not HTML. I was more familiar with scraping HTML.</p>
-
-
+<p>I found it very tricky to scrape my site for the elements I wanted because the CVEs are provided in XML format and not HTML. I was more familiar with scraping HTML. </p>
+<p>What I did was I selected my elements for each vulnerability tag, then I converted the selection to a string. However, I had to sort through these elements to select the attributes I wanted, so I converted the string to an array using the split method. This way I can iterate through the elements to find what the user wants.</p>
 
 
 
