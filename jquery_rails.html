@@ -30,7 +30,7 @@
         <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trip-Planner - jQuery with Rails</h3>
 
-<p>For the jQuery project at the Flatiron school's Learn program, I decided to add some javascript functionality to my "Trip-Planner" application. The requirements definitely mandated this, but it made my app much better. </p>
+<p>For the jQuery Rails project at the Flatiron school's Learn program, I had to add some javascript functionality to my "Trip-Planner" application. It was one of the requirements, and it made my app much better. </p>
 
 <p>I started building out the jquery on the user show page, and in this page I used a nested ajax request to call trips#index and also call a trips#show action. This of course was in the earlier stages of my project - </p>
 
@@ -78,7 +78,7 @@
     }
 </xmp></small>
 
-<p>This was pretty challenging to build out, however, I later realized that I could refactor this. I remembered that I could create a global ajax function that would use a callback function on success. All I had to do was pass in the url and the callback function as parameters. Here's how that looked in it's final stages: <p>
+<p>This was pretty challenging to build out, however, I later realized that I could refactor this. I remembered that I could create a global ajax function that would use a callback function on success. All I had to do was pass in the url and the callback function as parameters. Here's how that looked in its final stages: <p>
 
 <small><xmp>
   var ajaxRequest = function(url, callback) {
@@ -91,9 +91,9 @@
     }
 </xmp></small>
 
-<p>This leaves out the other functions that called trips#index and trips#show to append the response data. But making the ajax request a global function worked very nicely. Basically on success, the ajax would call the passed callback funtion tripsIndex() or add objectives(). Both of these are local functions to addObjectives and trips.click event handler.</p><br>
+<p>Now the other functions that called trips#index and trips#show actions could use the global function append their response data. Making the ajax request a global function worked very nicely. Basically on success, the ajax would call the passed callback funtion tripsIndex() or add objectives(). Both of these are local functions to addObjectives and trips.click event handler.</p><br>
 
-<p>I added a delete button per trip on this same user/show page. It was tricky to to get the delete button to have the proper trip id. I wasn't able to interpolate as a string. So instead, I removed the action attribute after creating it and then added the same attribute with the proper path to the proper trip. This was done by after appending the button by using the following selector: </p>
+<p>I also added a delete button per trip on this same user/show page. It was tricky to to get the delete button to have the proper trip id. I wasn't able to interpolate it as a string. So instead, I removed the action attribute after creating it and then added the same attribute with the proper path to the proper trip based on the id. This was done by after appending the button by using the following selector(notice the last line of code where the id is added): </p>
 
 <small><xmp>
   deleteTripButton    = '<%= button_to "Delete Trip", { controller: :trips ,action: "destroy", id: '' }, method: :delete, data: { confirm: "Are you sure?" } %>';
@@ -119,7 +119,7 @@
     }  
 </xmp></small>
 
-<p>I was happy to get that working! That was pretty much much all the jquery for my users/show. After I added this functionality, I went on to add jquery to the trips#show page. This one was not as challenging to build out now that I had the jQuery for users#show page. I decided to add the ability to add a new objective right on this page. To get this to work I used an ajax request to get the new objective page for the current trip. </p>
+<p>I was happy to get that working! That was pretty much all the jquery for my users/show. After I added this, I went on to add jquery to the trips#show page. This one was not as challenging to build out now that I had the jQuery for users#show page. I decided to add the ability to add a new objective right on this page. To get this to work I used an ajax request to get the new objective page for the current trip. </p>
 
 <small><xmp>
   var currentPath = window.location.pathname,
@@ -134,7 +134,7 @@
     }); 
 </xmp></small>
 
-<p>The issue with this was that it rendered the whole page and I wasn't exactly sure how to just grab the form itself. So at first I had a separate button that updated this form by removing the form page's html header and footer. You're probably wondering why I didn't just try to use a callback or an 'on load', but this wasn't working because the form needs to finish loading to that the DOM contains the new elements that I wanted to remove. Eventually I realized I could parse the response from the ajax request to the form page after converting it to html. This way I could just grab the form and display it! The final form looked like this:</p>
+<p>The issue with this was that it rendered the whole page and I wasn't exactly sure how to just grab the form itself. So at first I had a separate button that updated this form by removing the form page's html header and footer. You're probably wondering why I didn't just try to use a callback or an 'on load', but this wasn't working since the form needs to finish loading so that the DOM contains the new elements that I wanted to remove. Eventually I realized I could parse the response from the ajax request to the form page after converting it to html. This way I could just grab the form and display it! The final form looked like this:</p>
 
 <small><xmp>
   var path        = window.location.pathname;
