@@ -1,0 +1,197 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Blog by Jrodr4544</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>'Dat'_Tech_Blog</h1>
+        <h2></h2>
+
+        <section id="downloads">
+          <a href="https://github.com/Jrodr4544/blog/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/Jrodr4544/blog/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/Jrodr4544/blog" class="btn btn-github"><span class="icon"></span>My GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trip-Planner - jQuery with Rails</h3>
+
+<p>For the jQuery project at the Flatiron school's Learn program, I decided to add some javascript functionality to my "Trip-Planner" application. The requirements definitely mandated this, but it made my app much better. </p>
+
+<p>I started building out the jquery on the user show page, and in this page I used a nested ajax request to call trips#index and also call a trips#show action. This of course was in the earlier stages of my project - </p>
+
+<xmp>
+  $.ajax({
+        dataType: 'json',
+        url: "/trips",
+        method: 'GET',
+        success: function(data) {
+          $.each(data, function(index,key) {
+            var id = data[index].id;
+            showTrips(id, data[index]); 
+            
+            // below I interpolate the current object's id to the delete button action
+            $('form:eq('+index+')').removeAttr('action');
+            $('form:eq('+index+')').attr('action', '/trips/'+id);
+          });
+
+          // delegated event handler so that when a specific element is selected an action is called
+          $("div#mo-trips").on("click", "span#trip-objectives", function() {
+            // adding objectives for trip selected accordingly
+            addObjectives($(this));
+          })
+        }
+      });
+</xmp><br>
+
+<p>The addObjectives() function looked like this:</p>
+<small><xmp>
+   var addObjectives = function(element) {
+      var url = element.attr('data-url');
+      // Resetting the div based on element clicked on. If it exists reset, otherwise add it.
+      resetElement('div[data-url="'+url+'"]', "<div data-url="+url+"></div>", $('span[data-url="'+url+'"]'));
+      $.ajax({
+        dataType: 'json',
+        url: url,
+        method: 'GET',
+        success: function(data) {
+          $.each(data, function(index,key) {
+            // Inserting objectives before the delete button for the corresponding trip
+            $('div[data-url="'+url+'"]').append("<br><a href="+url+"/objectives/"+data[index].id+">"+data[index].title+"</a><li>"+data[index].notes+"</li>")
+          })
+        }
+      })
+    }
+</xmp></small>
+
+<p>This was pretty challenging to build out, however, I later realized that I could refactor this. I remembered that I could create a global ajax function that would use a callback function on success. All I had to do was pass in the url and the callback function as parameters. Here's how that looked in it's final stages: <p>
+
+<small><xmp>
+  var ajaxRequest = function(url, callback) {
+      $.ajax({
+        dataType: 'json',
+        url: url,
+        method: 'GET',
+        success: callback
+      })
+    }
+</xmp></small>
+
+<p>This leaves out the other functions that called trips#index and trips#show to append the response data. But making the ajax request a global function worked very nicely. Basically on success, the ajax would call the passed callback funtion tripsIndex() or add objectives(). Both of these are local functions to addObjectives and trips.click event handler.</p><br>
+
+<p>I added a delete button per trip on this same user/show page. It was tricky to to get the delete button to have the proper trip id. I wasn't able to interpolate as a string. So instead, I removed the action attribute after creating it and then added the same attribute with the proper path to the proper trip. This was done by after appending the button by using the following selector: </p>
+
+<small><xmp>
+  deleteTripButton    = '<%= button_to "Delete Trip", { controller: :trips ,action: "destroy", id: '' }, method: :delete, data: { confirm: "Are you sure?" } %>';
+
+  $('#mo-trips').append('<br><a class="btn btn-info" href=/trips/'+id+'>'+data.title+'</a>'+'  '+data.description+'<br><br>'+objectiveButton+'<br><br>'+deleteTripButton);
+
+  $('form:eq('+index+')').removeAttr('action');
+  $('form:eq('+index+')').attr('action', '/trips/'+id);
+</xmp></small>
+
+<p>I'm sure there are better ways to do this out there, but this is how I figured it out. Moreover, I also had trouble with duplicated elements. After clicking the event handlers they would append regardless if there was data already there. So I figured why not remove them and re-populate afterwards. When I first built this out I realized that it can be refactored yet again! I had this function defined in showTrips and in addObjectives. </p>
+
+<small><xmp>
+  var resetElement = function(element1, element2, window) {
+      if ($(element1).get()[0]) {
+        // reseting the div if it exists
+        $(element1).remove();
+        window.after(element2);
+      } else {
+        // creating div if it doesn't exist
+        window.after(element2);
+      }
+    }  
+</xmp></small>
+
+<p>I was happy to get that working! That was pretty much much all the jquery for my users/show. After I added this functionality, I went on to add jquery to the trips#show page. This one was not as challenging to build out now that I had the jQuery for users#show page. I decided to add the ability to add a new objective right on this page. To get this to work I used an ajax request to get the new objective page for the current trip. </p>
+
+<small><xmp>
+  var currentPath = window.location.pathname,
+      url         = currentPath+'/objectives/new'; 
+
+  $("#new-objective").click(function() {
+        $.get(url, function(data){
+         $("#new-objective").append(data);
+       })  
+         $("#new-objective").after(data);
+       })
+    }); 
+</xmp></small>
+
+<p>The issue with this was that it rendered the whole page and I wasn't exactly sure how to just grab the form itself. So at first I had a separate button that updated this form by removing the form page's html header and footer. You're probably wondering why I didn't just try to use a callback or an 'on load', but this wasn't working because the form needs to finish loading to that the DOM contains the new elements that I wanted to remove. Eventually I realized I could parse the response from the ajax request to the form page after converting it to html. This way I could just grab the form and display it! The final form looked like this:</p>
+
+<small><xmp>
+  var path        = window.location.pathname;
+
+    $("#new-objective").click(function() {
+      var url = path+'/objectives/new',
+       parser = new DOMParser();
+
+      $.get(url, function(data){
+        // parsing data(page at /objectives/new) from text to html
+        var htmlDoc = parser.parseFromString(data, "text/html"),
+            form    = htmlDoc.body.children[2].children[10];
+        // adding the parsed out form
+        $("#new-objective").after(form);
+      })
+    });
+</xmp></small>
+
+<p>Fun stuff!</p><br>
+
+<p>This form page was also required to create JS model objects. For this I realized it would be best to add a JS file to the javascript manifest in the assetpipeline. That way creating objects would apply to any page using the form, which means I also added the jquery form submit event handler in this file as well. On submit, the form input values would be serialized and sent to the controller with an ajax post request to create an object in the database. On response the data would be used to create a JS object model, like this:</p>
+
+<small><xmp>
+    var posting = function(url, values){
+    $.ajax({
+      url: url,
+      type: 'POST',
+      dataType: 'json',
+      data: values
+    }).done( function(data) {
+      var objective = new Objective(data["id"], data["title"], data["notes"]);
+      objective.alertMe();
+    });
+  }
+</xmp></small>
+
+<p>All that was left was to reset the form after submission, and walah! All done.</p>
+
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-74748028-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
+
