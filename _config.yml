@@ -1,0 +1,8 @@
+title: Blog
+description: 
+google_analytics: UA-74748028-1
+show_downloads: true
+theme: jekyll-theme-merlot
+
+gems:
+  - jekyll-mentions
