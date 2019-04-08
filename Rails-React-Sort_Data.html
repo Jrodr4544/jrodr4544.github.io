@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Blog by Jrodr4544</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>'Dat'_Tech_Blog</h1>
+
+        <section id="downloads">
+          <a href="https://github.com/Jrodr4544/jrodr4544.github.io/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/Jrodr4544/jrodr4544.github.io/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://jrodr4544.github.io/" class="btn">Home</a>
+          <a href="https://github.com/Jrodr4544" class="btn btn-github"><span class="icon"></span>My GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mitre's Att&ck Patterns - React-Redux with Rails</h3>
+
+<h2>Rails-React: Sorting data without using redux store</h2>
+
+
+<p>As I finished building out the Mitre's Attack Patterns app, I worked on adding a feature that could sort comments based on their content. Like any problem or task, there can be many ways to go about finding a solution. For this feature, I wanted to avoid using the redux store and only work with the component's local state. 
+A quick overview of this app - Mitre's Attack Patterns is an application that displays the data provided by the MITRE ATT&CK™ framework. 
+The AttackPatternShowContainer is the component that displays an individual attack pattern and its data including any associated comments. This container component is also responsible for displaying its child component the CommentFormContainer. It manages the form for submitting comments and generates an api call to create new comments once the form is filled in and submitted. 
+In reactjs, there's a mapStateToProps function which calls the redux store's state and maps it as props for the component. After a new comment is submitted, the store's state will have an updated attack pattern and therefore, the DOM will re-render the AttackPatternShowContainer along with the new data.
+This is where I decided to include the data for the feature to sort comments based on content. In this same function (mapStateToProps),  HTML is added to the attack-pattern comments and assigned to a variable called commentCards. Since this is defined, the value for sorting the attack-pattern comments on content could also be assigned to another variable called commentCardsSortedOnContent. The conditional below will assign comments with HTML to the commentCards and comentCardsSortedOnContent variables. 
+</p>
+
+<textarea rows="35" cols="110" disabled="true">
+
+const mapStateToProps = (state, ownProps) => {
+  const attackPattern = state.attackPatterns.patterns.find(attack => attack.id === parseInt(ownProps.match.match.params.attackId))
+
+  let references = '';
+  let commentCards = '';
+  let commentCardsSortedOnContent = '';
+
+  if (attackPattern.external_references !== undefined || attackPattern.comments !== undefined) {
+
+   if (attackPattern.external_references !== undefined) {
+      references = attackPattern.external_references.map((reference, index) => <li key={index}>Source: {reference.source_name} | <a href={reference.url}>{reference.url}</a></li>);
+    }
+
+    if (attackPattern.comments !== undefined) {
+      commentCards = attackPattern.comments.map((comment, index) => <ListGroupItem key={index}>Name: {comment.name}<br></br>Content: {comment.content}</ListGroupItem>)
+      commentCardsSortedOnContent = attackPattern.comments.sort((a, b) => (a.content < b.content) ? -1 : (a.content > b.content) ? 1 : 0).map((comment, index) => <ListGroupItem key={index}>Name: {comment.name}<br></br>Content: {comment.content}</ListGroupItem>)
+    }
+
+    return { references, attackPattern, commentCards, commentCardsSortedOnContent, history: ownProps.match.history }
+  } else {
+    return { attackPattern };
+  }
+
+}
+
+</textarea>
+
+<p>This data now exists in the DOM.  After a user clicks the button which triggers the local handleSortComments function,  the AttackPatternShowContainer will update the value for its local state attribute sortComments and set it to true. This will re-render this component and display the value for commentCardsSortedOnContent. </p> 
+
+<textarea rows="5" cols="75" disabled="true">
+<button onClick={this.handleSortComments}>Sort comments on content</button>
+</textarea>
+
+<textarea rows="25" cols="100" disabled="true">
+
+class AttackPatternShowContainer extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      sortComments: false
+    }
+  }
+
+  handleCommentSubmission = (comment) => {
+    console.log('COMMENT_SUBMISSION')
+
+    this.props.postComment(comment)
+  }
+
+  handleSortComments = () => {
+  debugger
+    this.setState(state => ({
+      sortComments: !state.sortComments
+    }))
+  }
+
+</textarea>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-74748028-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
+
