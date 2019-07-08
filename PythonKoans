@@ -1,0 +1,133 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@Jrodr4544
+Your GitHub academic discount coupon has expired
+
+    If you’re still eligible, you may re-apply.
+    If you’re no longer eligible, you may either update your payment information, or downgrade your account.
+
+If you have any questions, please contact GitHub Education.
+
+1
+0
+
+    0
+
+Jrodr4544/jrodr4544.github.io
+Code
+Issues 0
+Pull requests 0
+Projects 0
+Wiki
+Security
+Insights
+Settings
+jrodr4544.github.io/Mitres_Attack_Patterns.html
+@Jrodr4544 Jrodr4544 Wrote walkthrough for the Mitres Attack Patterns app 7a76c8b on Jan 15
+We found potential security vulnerabilities in your dependencies.
+
+Only the owner of this repository can see this message.
+Manage your notification settings or learn more about security alerts.
+71 lines (57 sloc) 6.6 KB
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Blog by Jrodr4544</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>'Dat'_Tech_Blog</h1>
+        <h2></h2>
+
+        <section id="downloads">
+          <a href="https://github.com/Jrodr4544/jrodr4544.github.io/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/Jrodr4544/jrodr4544.github.io/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://jrodr4544.github.io/" class="btn">Home</a>
+          <a href="https://github.com/Jrodr4544" class="btn btn-github"><span class="icon"></span>My GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mitre's Att&ck Patterns - React-Redux with Rails</h3>
+
+<h2>Learning Python – Comprehensions and Tuples</h2>
+<br></br>
+<p>Although I’ve only just began to actually use Python, I’ve used python in the past when I worked with Alienvault. 
+Alienvault is a great SIEM tool, and what’s great is that if there’s anything that you’re looking to get done that Alienvault doesn’t already do out of the box, you can always look to see if you can customize it to your liking. 
+In this way, the team and I built custom scripts to have Alienvault work as close as possible to how we wanted it to.
+</p>
+<br></br
+
+<p>To gain a better understanding of Python I looked for ways I could learn the language online and that’s when I came across Python Koans. 
+These Koans can be found at https://github.com/gregmalcolm/python_koans/ and they basically have you go through a set of tests per python programming concept. 
+I’ve gone through a good amount of them so far and noticed some concepts that stand out relative to other languages I’ve used like Ruby and Javascript.
+I’ve come across python comprehensions which are basically another form of iteration to create new sequences like sets, lists, or dict(aka hash).
+I find this concept to be pretty cool and neat. In ruby there are methods like select, reduce, and map to name a few that are similar to Python comprehensions. The thing about Python comprehensions is that they look to be a more simple and elegant form of iterating through lists to compose new lists. I was wondering if this could be done in ruby the same way it’s done in python and technically it’s possible by defining a method for it. Here is an example of how it’s done in python:
+</p>
+<br></br>
+<br></br>
+
+<p>Note: The code below uses a comprehension to iterate through two lists and combining each element from the first list with each element from the second list. The result will be – </p>
+<br></br>
+<br></br>
+<textarea rows="35" cols="110" disabled="true">
+['poached egg and lite spam', 'poached egg and ham spam', 'poached egg and fried spam', 'fried egg and lite spam', 'fried egg and ham spam', 'fried egg and fried spam']
+list_of_eggs = ['poached egg', 'fried egg']
+list_of_meats = ['lite spam', 'ham spam', 'fried spam']
+
+comprehension = [ '{0} and {1}'.format(egg, meat) for egg in list_of_eggs for meat in list_of_meats] 
+</textarea>
+
+<p>Something else I’ve come across while learning Python is Tuples. Tuples are immutable objects. Immutable objects are objects that are not mutable and cannot be modified, so elements of a tuple cannot be changed. They are similar to lists and dicts but they are immutable. In addition to that they are also faster than lists because they use less memory.</p>
+<br></br>
+<textarea rows="35" cols="110" disabled="true">
+a = (2,)
+(2)
+
+b = tuple([3,4])
+(3,4)
+
+word = tuple("word")
+('w','o','r','d')
+
+</textarea>
+
+<h3><a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+      </section>
+    </div>
+   
+  </body>
+</html>
+
+    © 2019 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
