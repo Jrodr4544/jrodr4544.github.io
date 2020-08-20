@@ -41,26 +41,26 @@ In this way, the team and I built custom scripts to have Alienvault work as clos
 <p>To gain a better understanding of Python I looked for ways I could learn the language online and that’s when I came across Python Koans. 
 These Koans can be found at https://github.com/gregmalcolm/python_koans/ and they basically have you go through a set of tests per python programming concept. 
 I’ve gone through a good amount of them so far and noticed some concepts that stand out relative to other languages I’ve used like Ruby and Javascript.
-I’ve come across python comprehensions which are basically another form of iteration to create new sequences like sets, lists, or dict(aka hash).
+I’ve come across python comprehensions which are basically another form of iteration to create new sequences like sets, lists, or dict(aka Dictionaries).
 I find this concept to be pretty cool and neat. In ruby there are methods like select, reduce, and map to name a few that are similar to Python comprehensions. The thing about Python comprehensions is that they look to be a more simple and elegant form of iterating through lists to compose new lists. I was wondering if this could be done in ruby the same way it’s done in python and technically it’s possible by defining a method for it. Here is an example of how it’s done in python:
 </p>
 <br></br>
-<br></br>
 
 <p>Note: The code below uses a comprehension to iterate through two lists and combining each element from the first list with each element from the second list. The result will be – </p>
-<br></br>
-<br></br>
-<textarea rows="35" cols="110" disabled="true">
-['poached egg and lite spam', 'poached egg and ham spam', 'poached egg and fried spam', 'fried egg and lite spam', 'fried egg and ham spam', 'fried egg and fried spam']
+<textarea rows="6" cols="110" disabled="true">
 list_of_eggs = ['poached egg', 'fried egg']
 list_of_meats = ['lite spam', 'ham spam', 'fried spam']
 
 comprehension = [ '{0} and {1}'.format(egg, meat) for egg in list_of_eggs for meat in list_of_meats] 
+
+['poached egg and lite spam', 'poached egg and ham spam', 'poached egg and fried spam', 'fried egg and lite spam', 'fried egg and ham spam', 'fried egg and fried spam']
+
 </textarea>
+<br></br>
 
 <p>Something else I’ve come across while learning Python is Tuples. Tuples are immutable objects. Immutable objects are objects that are not mutable and cannot be modified, so elements of a tuple cannot be changed. They are similar to lists and dicts but they are immutable. In addition to that they are also faster than lists because they use less memory.</p>
-<br></br>
-<textarea rows="35" cols="110" disabled="true">
+
+<textarea rows="8" cols="110" disabled="true">
 a = (2,)
 (2)
 
@@ -71,6 +71,8 @@ word = tuple("word")
 ('w','o','r','d')
 
 </textarea>
+<br></br>
+<br></br>
 
 <h3><a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
 
