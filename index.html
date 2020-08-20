@@ -38,20 +38,6 @@
 
 <p>A quick bio - I'm Jelson Rodriguez and I've taken on the challenge of going through Learn Verified's Full Stack Web Development program at <a href="https://flatironschool.com/">The Flatiron School</a>. Already having some background in Java, javascript and HTML; I knew the program would be a fun challenge. After going through a portion of the course, one of my first projects involved building a gem that interacts with the user via the <a href="#cve-cli-gem">command line interface(CLI)</a>.  I built a tool that can scrape Mitre's website which contains repositories of Common Vulnerabilities and Exposures (CVEs). Mitre also describes these CVEs as publicly known cybersecurity vulnerabilities. This list is useful to determine the vulnerabilities that affect different types of internet protocols, software and hardware. </p>
 
-<h3><a id="cve-cli-gem" class="anchor" href="https://github.com/Jrodr4544/CVE-cli-gem" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CVE-CLI-GEM process walkthrough</h3>
-
-<p>When first building out my gem, I thought of the types of classes, methods, and attributes that I would need. One class would take the responsibility of creating vulnerability objects from the scraped website, and another class would act as the container/repository for the objects.</p>
-
-<p>I then thought of how I would like the application's functionality to work and what the user may want the app to do. This helped me structure the methods for my repository class.</p>
-
-<p>Once I had an idea of how it would work, I added some other gems like Nokogiri, OpenURI, and Pry. Without thse gems the application wouldn't work. Nokogiri is required in order to scrape the elements on the website, OpenURI gets the page for me, and Pry is great for debugging ruby code.</p>
-
-<p>I found it very tricky to scrape my site for the elements I wanted because the CVEs are provided in XML format and not HTML. I was more familiar with scraping HTML. </p>
-<p>What I did was I selected my elements for each vulnerability tag, then I converted the selection to a string. However, I had to sort through these elements to select the attributes I wanted, so I converted the string to an array using the split method. This way I can iterate through the elements to find what the user wants. Similar logic is used throughout the repository class in order to sort through vulnerabilities.</p>
-
-<p>After that, I was pretty much done building the classes for the gem. Only thing is, I realized I did not think of how the classes would interact. I wasn't sure whether I needed a module. For instance, if I wanted to sort through vulnerabilities I would need a repository, and to make the repository give the user what they want I would need an object to scrape websites. Additionally, I would also need a cli, an interface for the user to interact with the gem. </p>
-
-<p>That is when I came accross Avi Flombaum's lecture on CLI-Gems and his approach to building gems. I also looked at another gem's structure to help me decide how I'd create interaction between classes. So I then had a better understanding that I would need a controller for cli in order to interact with my web scraper that would then create a repository.</p>
 
 <div class="container-fluid" align>
       <div class="row">
@@ -60,7 +46,8 @@
           <ul class="nav nav-sidebar">
 	    
             <li class="active"><a href="/whydev">Why did I persue software development?</a></li>
-	    <li><a href="/Mitres_Attack_Patterns">Mitre's Att&ck Patterns: React-Redux with Rails</a></li>
+	          <li><a href="/CVE_CLI_gem">CVE CLI Gem</a></li>
+	          <li><a href="/Mitres_Attack_Patterns">Mitre's Att&ck Patterns: React-Redux with Rails</a></li>
             <li><a href="/NET-i">Sinatra Project: NET-i</a></li>
             <li><a href="/Trip-Planner">Rails Project: Trip-Planner</a></li>
             <li><a href="/jquery_rails">jQuery-Rails Project: Trip-Planner</a></li>
